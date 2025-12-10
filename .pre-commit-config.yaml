@@ -1,0 +1,94 @@
+repos:
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.9.17
+    hooks:
+      - id: uv-lock
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: mixed-line-ending
+        args: [--fix=auto]
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=512]
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: debug-statements
+      - id: name-tests-test
+        args: [--pytest-test-first]
+      - id: requirements-txt-fixer
+
+  # strip notebook outputs to avoid committing large binary outputs
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.2
+    hooks:
+      - id: nbstripout
+        files: ^experiments/.*\.ipynb$
+        stages: [pre-commit]
+
+  # Security: detect secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package.lock.json
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.14.8
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: [ --fix ]
+      # Run the formatter.
+      - id: ruff-format
+
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.407
+    hooks:
+      - id: pyright
+
+# Optional: Additional hooks (uncomment to enable)
+
+# Performance and best practices
+#  - repo: https://github.com/asottile/pyupgrade
+#    rev: v3.21.0
+#    hooks:
+#      - id: pyupgrade
+#        args: [--py313-plus]
+
+# Markdown linting
+#  - repo: https://github.com/igorshubovych/markdownlint-cli
+#    rev: v0.42.0
+#    hooks:
+#      - id: markdownlint
+#        args: [--fix]
+
+# Shell script linting
+#  - repo: https://github.com/shellcheck-py/shellcheck-py
+#    rev: v0.10.0.1
+#    hooks:
+#      - id: shellcheck
+
+# YAML formatting
+#  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+#    rev: v2.14.0
+#    hooks:
+#      - id: pretty-format-yaml
+#        args: [--autofix, --indent, '2']
+
+# Commit message linting (conventional commits)
+#  - repo: https://github.com/compilerla/conventional-pre-commit
+#    rev: v3.8.0
+#    hooks:
+#      - id: conventional-pre-commit
+#        stages: [commit-msg]
