@@ -28,7 +28,10 @@ classifiers = [
 # # Changelog = "https://github.com/yourusername/video-ai/blob/main/CHANGELOG.md"
 
 dependencies = [
+    "ffmpeg-python>=0.2.0",
     "logging>=0.4.9.6",
+    "pydantic>=2.12.5",
+    "tinytag>=2.1.2",
 ]
 
 [dependency-groups]
@@ -88,8 +91,7 @@ reportUnusedVariable = true
 # AI / ML-specific settings
 reportIncompatibleMethodOverride = true
 reportIncompatibleVariableOverride = true
-autoImportCompletions = true
-autoSearchPaths = true
+reportUnknownMemberType = "warning"
 
 [tool.mypy]
 python_version = "3.13"
